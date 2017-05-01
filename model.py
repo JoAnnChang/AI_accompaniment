@@ -131,9 +131,9 @@ class Model(object):
         self.input_mat = T.btensor4()
         # dimensions: (batch, time, notes, onOrArtic) with 0:on, 1:artic
         self.output_mat = T.btensor4()
-        
+        print "-----------------------------output_mat=T.btensor4()----------------------------"
         self.epsilon = np.spacing(np.float32(1.0))
-
+	
         def step_time(in_data, *other):
             other = list(other)
             split = -len(self.t_layer_sizes) if self.dropout else len(other)

@@ -34,9 +34,14 @@ def loadPieces(dirpath_main, dirpath_accomp):
 
 def getPieceSegment(pieces):
     ### EDIT ###
-    piece_output = random.choice(pieces.values())
+    piece_choose = random.choice(pieces.keys())
+    print piece_choose
+    piece_output = pieces.get(piece_choose)
+
+    #piece_output = random.choice(pieces.values())
+    
     start = random.randrange(0,len(piece_output[0])-batch_len,division_len)
-    # print "Range is {} {} {} -> {}".format(0,len(piece_output)-batch_len,division_len, start)
+    #print "Range is {} {} {} -> {}".format(0,len(piece_output)-batch_len,division_len, start)
     #seg_out = piece_output[start:start+batch_len]
     #seg_in = noteStateMatrixToInputForm(seg_out)
     seg_main = piece_output[0][start:start+batch_len]
@@ -59,7 +64,8 @@ def trainPiece(model,pieces,epochs,start=0):
         if stopflag[0]:
             break
         error = model.update_fun(*getPieceBatch(pieces))
-        if i % 100 == 0:
+        print "epoch ", i, error
+	if i % 100 == 0:
             print "epoch {}, error={}".format(i,error)
         if i % 500 == 0 or (i % 100 == 0 and i < 1000):
             xIpt, xOpt = map(numpy.array, getPieceSegment(pieces))
